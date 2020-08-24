@@ -57,9 +57,14 @@ public class ArrayList<T> {
             throw new java.lang.IllegalArgumentException("You cannot add null data to ArrayList.");
         }
 
+        /*
+         * Checking if adding at index will overflow array.
+         * If so, make an array of double capacity.
+         */
         if (this.size + 1 > this.backingArray.length) {
             T[] newArray = (T[]) new Object[this.backingArray.length * 2];
 
+            // Shifting of items as copying occurs to leave room for new item.
             for (int i = this.size - 1; i >= index; i--) {
                 newArray[i + 1] = this.backingArray[i];
             }
@@ -70,8 +75,10 @@ public class ArrayList<T> {
                 newArray[i] = this.backingArray[i];
             }
 
+            // Replace old backingArray with newArray.
             this.backingArray = newArray;
         } else {
+            // Shifting items to back of array to make room for new item.
             for (int i = this.size - 1; i >= index; i--) {
                 this.backingArray[i + 1] = this.backingArray[i];
             }
@@ -79,6 +86,7 @@ public class ArrayList<T> {
             this.backingArray[index] = data;
         }
 
+        // Increase size to account for new item.
         this.size += 1;
         return;
     }
@@ -98,17 +106,24 @@ public class ArrayList<T> {
             throw new java.lang.IllegalArgumentException("You cannot add null data to ArrayList.");
         }
 
+        /*
+         * Checking if adding at index will overflow array.
+         * If so, make an array of double capacity.
+         */
         if (this.size + 1 > this.backingArray.length) {
             T[] newArray = (T[]) new Object[this.backingArray.length * 2];
 
+            // Shifting of items as copying occurs to leave room for new item.
             for (int i = this.size - 1; i >= 0; i--) {
                 newArray[i + 1] = this.backingArray[i];
             }
 
             newArray[0] = data;
 
+            // Replace old backingArray with newArray.
             this.backingArray = newArray;
         } else {
+            // Shifting items to back of array to make room for new item.
             for (int i = this.size - 1; i >= 0; i--) {
                 this.backingArray[i + 1] = this.backingArray[i];
             }
@@ -116,6 +131,7 @@ public class ArrayList<T> {
             this.backingArray[0] = data;
         }
 
+        // Increase size to account for new item.
         this.size += 1;
     }
 
@@ -132,20 +148,28 @@ public class ArrayList<T> {
             throw new java.lang.IllegalArgumentException("You cannot add null data to ArrayList.");
         }
 
+        /*
+         * Checking if adding at index will overflow array.
+         * If so, make an array of double capacity.
+         */
         if (this.size + 1 > this.backingArray.length) {
             T[] newArray = (T[]) new Object[this.backingArray.length * 2];
 
+            // Copying backingArray to newArray.
             for (int i = 0; i < this.size; i++) {
                 newArray[i] = backingArray[i];
             }
 
             newArray[this.size] = data;
 
+            // Replace old backingArray with newArray.
             this.backingArray = newArray;
         } else {
+            // Simply add the new item to the back.
             this.backingArray[this.size] = data;
         }
 
+        // Increase size to account for new item.
         this.size += 1;
     }
 
@@ -165,13 +189,18 @@ public class ArrayList<T> {
             throw new java.lang.IndexOutOfBoundsException("You cannot remove data outside of ArrayList bounds.");
         }
 
+        // Saving item to be removed for later return.
         T removedItem = this.backingArray[index];
 
+        // Shifting items over top of where the removed item was.
         for (int i = index + 1; i < this.size; i++) {
             this.backingArray[i - 1] = this.backingArray[i];
         }
 
+        // Removing the old last item of the list (duplicate).
         this.backingArray[this.size - 1] = null;
+
+        // Decrease size to account for removed item.
         size -= 1;
         return removedItem;
     }
@@ -191,13 +220,18 @@ public class ArrayList<T> {
             throw new java.util.NoSuchElementException("The ArrayList is empty.");
         }
 
+        // Saving item to be removed for later return.
         T removedItem = this.backingArray[0];
 
+        // Shifting items over top of where the removed item was.
         for (int i = 1; i < this.size; i++) {
             this.backingArray[i - 1] = this.backingArray[i];
         }
 
+        // Removing the old last item of the list (duplicate).
         this.backingArray[this.size - 1] = null;
+
+        // Decrease size to account for removed item.
         size -= 1;
         return removedItem;
     }
@@ -215,8 +249,13 @@ public class ArrayList<T> {
             throw new java.util.NoSuchElementException("The ArrayList is empty.");
         }
 
+        // Saving item to be removed for later return.
         T removedItem = this.backingArray[this.size - 1];
+
+        // Simply remove the last item of the list.
         this.backingArray[this.size - 1] = null;
+
+        // Decrease size to account for removed item.
         size -= 1;
         return removedItem;
     }
